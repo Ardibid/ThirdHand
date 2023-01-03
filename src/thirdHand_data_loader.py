@@ -351,19 +351,7 @@ class MezrabMotionDataset(Dataset):
                 "max_val" : self.max_val, #[0],
                 "centered_min_val" : self.centered_min_val, #[0], 
                 "centered_max_val" : self.centered_max_val, #[0]
-                }
-        
-        # return [self.X[idx], #0
-        #         self.Hand[idx], #1
-        #         self.X_scaled[idx], #2
-        #         self.X_centered[idx], #3
-        #         self.X_centered_scaled[idx], #4
-        #         self.min_val, #5
-        #         self.max_val, #6
-        #         self.centered_min_val, #7
-        #         self.centered_max_val #8
-        #         ]
-        
+                }  
         
 
 ##########################################################################################
@@ -488,11 +476,6 @@ def generate_plots(embedding_data, strokes, list_of_features):
                                 )
                     )
     return fig
-
-
-
-
-
 
 if __name__ == "__main__":
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
