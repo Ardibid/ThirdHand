@@ -183,9 +183,44 @@ class Decoder(nn.Module):
 ##########################################################################################
 # C-VAE Network
 ##########################################################################################    
-class VAE_CNN(nn.Module):
+class CVAE_CNN(nn.Module):
+    def __init__(self, project_config, model_config):
+        super(CVAE_CNN, self).__init__()
+        
+        self.project_config = project_config
+        self.model_config = model_config
+         
+        self.encoder = Encoder(
+                                self.project_config.device, 
+                                self.model_config.first_filter_size, 
+                                self.model_config.kernel_size, 
+                                self.model_config.depth, 
+                                self.model_config.dropout, 
+                                self.model_config.latent_dim,
+                                )
+
+        self.decoder = Decoder(
+                                self.project_config.device, 
+                                self.model_config.first_filter_size, 
+                                self.model_config.kernel_size, 
+                                self.model_config.depth, 
+                                self.model_config.latent_dim, 
+                                self.encoder.last_filter_size,
+                                self.encoder.last_feature_size,
+                                )
+        
+        self.reduction = self.model_config.reduction
+        self.kld_weight = self.model_config.kld_weight
+        self.rec_loss = self.model_config.rec_loss
+    
+    def forward(self, x, y):
+        z, mean, log_var = self.encoder(x, y)
+        x_rec = self.decoder(z, y)
+        return x_rec, mean, log_var
+    
+class VAE_CNN_(nn.Module):
     def __init__(self, device, first_filter_size, kernel_size, depth, dropout, latent_dim, rec_loss, reduction, kld_weight):
-        super(VAE_CNN, self).__init__()
+        super(VAE_CNN_, self).__init__()
 
         self.encoder = Encoder(
                                 device, 

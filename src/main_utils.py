@@ -123,3 +123,47 @@ class Configuration(object):
         """
         write_name = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
         self.writer = SummaryWriter('runs/testTensorboard/test_{}'.format(write_name))
+        
+        
+class ModelConfiguration(object):
+    """A class to store all the CVAE model configuration
+    """
+    def __init__(self, 
+                 device='cuda', 
+                 kernel_size = 5, 
+                 first_filter_size = 9, 
+                 depth = 2,
+                 dropout = 0.1,
+                 epochs = 100, 
+                 latent_dim = 8,
+                 rec_loss= "L1",
+                 reduction= "sum",
+                  kld_weight = 1e-1,
+                 model_name_to_save="c_vae_model"
+                 ):
+        """_summary_
+        Args:
+            device (str, optional): Selects CPU or GPU for CUDA. Defaults to 'cuda'.
+            kernel_size (int, optional): size of the kernel, both 3 and 5 would work. Defaults to 5.
+            first_filter_size (int, optional): size of the first filter. Defaults to 9.
+            depth (int, optional): depth of the encoder/decoder networks. Defaults to 2.
+            dropout (float, optional): dropout rate. Defaults to 0.1.
+            epochs (int, optional): number of epochs to train the model. Defaults to 100.
+            latent_dim (int, optional): size of the latent dim 2**latent_dim. Defaults to 8.
+            rec_loss (string): loss function for reconstruction, i.e., "L1" or "L2"
+            reduction (string): loss function reduction for reconstruction, i.e., "sum"
+            kld_weight (float): rec_loss and kld_loss ration, i.e., 1e-1
+            model_name_to_save (str, optional): name of the model to be saved. Defaults to "c_vae_model".
+        """
+        self.device= device 
+        self.kernel_size = kernel_size
+        self.first_filter_size = first_filter_size 
+        self.depth = depth
+        self.dropout = dropout
+        self.epochs = epochs
+        self.latent_dim = latent_dim
+        self.rec_loss= rec_loss
+        self.reduction= reduction
+        self.kld_weight = kld_weight
+        self.model_name_to_save = model_name_to_save
+    
