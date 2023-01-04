@@ -7,7 +7,7 @@
 * CUDA: 11.6
 
 ### Dependencies:
-
+Use the [spec-file.txt](spec-file.txt) to reproduce the Conda environment. The main libraries are listed below:
 * [PyTorch](https://pytorch.org/get-started/locally/) 1.13.1 <br>
     ``` conda install pytorch torchvision torchaudio pytorch-cuda=11.6 -c pytorch -c nvidia```
 * [Tensorboard](https://www.tensorflow.org/tensorboard) 2.11.0 <br>
