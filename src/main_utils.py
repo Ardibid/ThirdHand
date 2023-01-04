@@ -1,22 +1,57 @@
-from src.thirdHand_data_loader import MotionSignalProcess, MezrabMotionDataset
-from src.thirdHand_data_loader import read_motion_csv_files, test_data_dimensions, dataloader_creator
+#! /usr/bin/env python
+"""
+    File name: main_utils.py
+    Author: Ardavan Bidgoli
+    Date created: 11/03/2021
+    Date last modified: 01/03/2022
+    Python Version: 3.10.8
+    License: MIT
+"""
 
+##########################################################################################
+# Imports
+##########################################################################################
 import numpy as np
 from torch.utils.tensorboard import SummaryWriter
 from datetime import datetime
-import plotly.graph_objects as go
 
+from src.thirdHand_data_loader import MotionSignalProcess, MezrabMotionDataset
+from src.thirdHand_data_loader import read_motion_csv_files, dataloader_creator
+
+##########################################################################################
+# Classes
+##########################################################################################
 class Configuration(object):
-    def __init__(self, device='cuda', 
+    """A class to store all the project configuration (except C-VAE parameters)
+    """
+    def __init__(self, 
+                 device='cuda', 
                  csv_folder_path=None, 
                  tresh_l= 0.289, 
-                 tresh_h_normal=0.4, 
-                 tresh_h_riz=0.27, 
-                 dist=15, 
-                 peak_dist=30, 
-                 motion_fixed_length=20, 
+                 tresh_h_normal= 0.4, 
+                 tresh_h_riz= 0.27, 
+                 dist= 15, 
+                 peak_dist= 30, 
+                 motion_fixed_length= 20, 
                  data_item="X_centered_scaled", 
-                 batch_size=128):
+                 batch_size= 128):
+        """Initiates a Configuration object
+
+        Args:
+            device (str, optional): Selects CPU or GPU for CUDA. Defaults to 'cuda'.
+            csv_folder_path (_type_, optional): Path to read the csv files of motion data. Defaults to None.
+            tresh_l (float, optional): Determines how strong a lower peak should be in order to be recognized. Defaults to 0.289.
+            tresh_h_normal (float, optional): Determines how strong an uppber peak should be in order to be 
+                                              recognized for "Riz" motions segmentation. Defaults to 0.4.
+            tresh_h_riz (float, optional): Determines how strong an uppber peak should be in order to be 
+                                           recognized for not "Riz" motions segmentation. Defaults to 0.27.
+            dist (int, optional): Minimum distance between each detected peak. Defaults to 15.
+            peak_dist (int, optional): The max distance between the upper peak and lower peaks. Defaults to 30.
+            motion_fixed_length (int, optional): size of each motion. Defaults to 20.
+            data_item (str, optional): Determines which type of normalization and centering should be used. 
+                                       Defaults to "X_centered_scaled".
+            batch_size (int, optional): dataloader batch size. Defaults to 128.
+        """
         
         # general settings
         self.device = device
@@ -45,6 +80,8 @@ class Configuration(object):
         self.process_dataset_dataloaders()
         
     def process_dataframe(self):
+        """Reads the data csv files and converts them into a single numpy ndarray
+        """
         strokes_df = read_motion_csv_files(self.csv_folder_path, [0,1,2,3,4,7,8,9,10,11,12]) 
         # reads the dataframe and converts it ontp slices of Mezrab strokes
         strokes_processor = MotionSignalProcess(strokes_df, 
@@ -73,7 +110,8 @@ class Configuration(object):
                                   strokes_riz])
         
     def process_dataset_dataloaders(self):
-        # makes the dataoader out of the strokes
+        """Creates a PyTorch dataoader out of the strokes
+        """
         self.mezrab_stroke_dataset = MezrabMotionDataset(self.strokes, 
                                                          self.device)
         data_pack = dataloader_creator(self.mezrab_stroke_dataset,
@@ -81,5 +119,7 @@ class Configuration(object):
         self.train_dataset, self.valid_dataset, self.test_dataset, self.train_iterator, self.valid_iterator, self.test_iterator  = data_pack
     
     def init_writer(self):
+        """initiates the SummaryWriter for Tensorboard
+        """
         write_name = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
         self.writer = SummaryWriter('runs/testTensorboard/test_{}'.format(write_name))

@@ -7,6 +7,7 @@
     Python Version: 3.10.8
     License: MIT
 """
+
 import torch
 from torch import optim as optim
 
@@ -16,16 +17,29 @@ from .cvae_networks import vae_loss_function
 from .evaluation_utils import eval_epoch
 from .motion_visualization_tools import quick_plot
 
+##########################################################################################
+# Training Functions
+##########################################################################################
+def train_epoch_single(model, project_config, optimizer):
+    """Function to perform a single epoch training
+    Args:
+        model (VAE_CNN): the cvae model
+        project_config (Configuration): represents the project configuration
+        optimizer (torch.optim): optimizer 
 
-
-def train_epoch_single(model, model_config, optimizer):
+    Returns:
+        array: a list of len 3, containing the average epoch_loss, epoch_rec_loss, epoch_kld_loss
+    """
+    # set the model in training mode
     model.train()
+    
     epoch_loss = 0
     epoch_rec_loss = 0
     epoch_kld_loss = 0
  
-    for data in model_config.train_iterator:
-        x= data[model_config.data_item]
+    # iterate over the training data
+    for data in project_config.train_iterator:
+        x= data[project_config.data_item]
         y= data["Y"]
         
         optimizer.zero_grad()
@@ -48,54 +62,72 @@ def train_epoch_single(model, model_config, optimizer):
         train_loss.backward()
         optimizer.step()
  
-    counter = len(model_config.train_iterator)   
+    counter = len(project_config.train_iterator)   
     results = [epoch_loss/counter,
                 epoch_rec_loss/counter, 
                 epoch_kld_loss/counter]      
     
     return results
 
-def train_model(model, model_config, epochs=100, model_name_to_save="cvae_model"):         
+def train_model(model, project_config, epochs=100, model_name_to_save="cvae_model", report_interval =50):  
+    """Trains the cvae model for given number of epochs
+
+    Args:
+        model (VAE_CNN): the cvae model to train
+        project_config (Configuration): represents the project configuration
+        epochs (int, optional): number of training epochs. Defaults to 100.
+        model_name_to_save (str, optional): name for the trained model to save. 
+                                            Defaults to "cvae_model".
+
+    Returns:
+        touple: four lsits of data, train_losses ,train_rec_losses,train_kld_losses, eval_losses 
+    """
+    # setting up the trainnig process
     start_time = time.time()
     optimizer = optim.Adam(model.parameters(), lr = 0.0001)
     
+    project_config.process_dataset_dataloaders()
     
-    model_config.process_dataset_dataloaders()
     train_losses = []
     train_rec_losses = []
     train_kld_losses = []
     eval_losses = []
+    
+    # main training loop
     for epoch in range(epochs+1):
-        # train
+        # train for a single epoch
         train_loss, train_rec_loss, train_kld_loss = train_epoch_single(
                                                                         model, 
-                                                                        model_config,
+                                                                        project_config,
                                                                         optimizer,
                                                                         )
         log_plot= False
-        report_interval = 50
+        
+        
+        # interval report of model's reconstruction as a plot 
         if epoch % report_interval ==0:
             log_plot= True
             path_to_save_plot = "runs/progress/tmp_fig_{}.png".format(epoch)  
-            print("<<Image {} saved>>".format(epoch)) 
-              
-        eval_loss, _, _ = eval_epoch(
+            print("Image {} saved".format(epoch)) 
+        
+        # calculating evaluation loss     
+        eval_loss,_,_ = eval_epoch(
                                     model, 
-                                    model_config, 
-                                    model_config.valid_iterator, 
+                                    project_config, 
                                     loss_function= vae_loss_function,
                                     rec_loss= model.rec_loss, 
-                                    reduction=model.reduction, 
+                                    reduction= model.reduction, 
                                     kld_weight= model.kld_weight,
                                     save_plot= log_plot,
                                     path_to_save_plot= path_to_save_plot,
-                                    is_vae= True
                                     )
         
+        # storing the results 
         train_losses.append(train_loss)
         train_rec_losses.append(train_rec_loss)
         train_kld_losses.append(train_kld_loss)
         eval_losses.append(eval_loss)
+        
         
         if epoch % report_interval ==0:
             print("{}:\tTotal: {:.5f}\tEval loss: {:.5f}\t Rec loss: {:.5f}\t KLD loss: {:.5f}\t time: {:.1f}s".format(epoch, 
@@ -114,6 +146,16 @@ def train_model(model, model_config, epochs=100, model_name_to_save="cvae_model"
 
 
 def plot_reports(train_losses, train_rec_losses, train_kld_losses, eval_losses):
+    """A simple function to make 3 plots of the training process
+       Since the kld loss is smaller than the rec loss, keeping all in the 
+       same plots renders it hard to read, so each plot behaves slightly differently
+
+    Args:
+        train_losses (list): train loss
+        train_rec_losses (list): train reconstratction loss
+        train_kld_losses (list): train KLD loss
+        eval_losses (list): evaluation loss
+    """
     quick_plot(train_losses, train_rec_losses, train_kld_losses, eval_losses)
     quick_plot(train_losses=train_losses, eval_losses=eval_losses, KLD=None, rec=None)
     quick_plot(train_losses=train_losses, eval_losses=eval_losses, KLD=train_kld_losses, rec= train_rec_losses)

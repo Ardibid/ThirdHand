@@ -2,10 +2,11 @@
     File name: thirdhand_data_loader.py
     Author: Ardavan Bidgoli
     Date created: 10/27/2021
-    Date last modified: 11/02/2021
-    Python Version: 3.8.12
+    Date last modified: 01/03/2022
+    Python Version: 3.10.8
     License: MIT
 '''
+
 ##########################################################################################
 # Imports
 ##########################################################################################
@@ -160,7 +161,7 @@ class MotionSignalProcess(object):
         """
         Reads the signal, a nx1 numpy array and finds the index values for all peaks
         Args:
-            signa (numpy array): nx1 numpy array
+            signal (numpy array): nx1 numpy array
             tresh_l (float): Determines how strong a lower peak should be in order to be recognized 
             tresh_h (float): Determines how strong an uppber peak should be in order to be recognized
             dist (int): Minimum distance between each detected peak.

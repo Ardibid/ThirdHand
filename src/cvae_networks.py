@@ -210,16 +210,17 @@ class VAE_CNN(nn.Module):
         self.kld_weight = kld_weight
         self.rec_loss = rec_loss
         
-    def vae_loss_function(self, x, x_rec, log_var, mean):
-        if self.rec_loss == "L1":
-            train_rec_loss = F.l1_loss(x_rec, x, reduction=self.reduction)   
-        else:
-            train_rec_loss = F.mse_loss(x_rec, x, reduction=self.reduction)     
-        train_kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mean**2 - log_var.exp(), dim = 1), dim = 0)
+    # def vae_loss_function(self, x, x_rec, log_var, mean):
+    #     print(" IAM USING THIS FUNCTION!")
+    #     if self.rec_loss == "L1":
+    #         train_rec_loss = F.l1_loss(x_rec, x, reduction=self.reduction)   
+    #     else:
+    #         train_rec_loss = F.mse_loss(x_rec, x, reduction=self.reduction)     
+    #     train_kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mean**2 - log_var.exp(), dim = 1), dim = 0)
 
-        train_loss = train_rec_loss  + train_kld_loss*self.kld_weight
+    #     train_loss = train_rec_loss  + train_kld_loss*self.kld_weight
         
-        return train_loss, train_rec_loss, train_kld_loss*self.kld_weight  
+    #     return train_loss, train_rec_loss, train_kld_loss*self.kld_weight  
     
     def forward(self, x, y):
         z, mean, log_var = self.encoder(x, y)
@@ -227,9 +228,24 @@ class VAE_CNN(nn.Module):
         return x_rec, mean, log_var
         
 ##########################################################################################
-# Support Functions
+# Support Function
 ##########################################################################################           
 def vae_loss_function(x, x_rec, log_var, mean, rec_loss, reduction, kld_weight):
+    """_summary_
+
+    Args:
+        x (torch.Tensor): batch of x
+        x_rec (ntorch.Tensor): batch of x reconstructed after passing through the network
+        log_var (torch.Tensorr): the logvar tensor from the encoder network
+        mean (torch.Tensor):  the mean tensor from the encoder network
+        rec_loss (string): loss function for reconstruction, i.e., "L1" or "L2"
+        reduction (string): loss function reduction for reconstruction, i.e., "sum"
+        kld_weight (float): rec_loss and kld_loss ration, i.e., 1e-1
+
+    Returns:
+        _type_: _description_
+    """
+    
     if rec_loss == "L1":
         train_rec_loss = F.l1_loss(x_rec, x, reduction=reduction)   
     else:

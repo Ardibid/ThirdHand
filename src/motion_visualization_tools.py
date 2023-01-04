@@ -13,21 +13,30 @@
 ##########################################################################################
 import torch
 import numpy as np
-from os.path import join
-import time
 
 # visualizations
 import plotly.graph_objects as go 
 
-
-
 ##########################################################################################
 # Functions
 ##########################################################################################
-def plot_layout_style(fig, plot_title):
-    fig.update_layout(height=800,
+def plot_layout_style(fig, 
+                      plot_title, 
+                      plot_height= 600,
+                      theme= "plotly_dark"):
+    """A function to unify the style of all plots
+
+    Args:
+        fig (plotly.graph_objs._figure.Figure): the graph to plot
+        plot_title (string): title of the graph
+        plot_height (int): height of the plot, default set to 600px
+        theme (string): defines the plot thems, default set to "plotly_dark"
+    Returns:
+        _type_: _description_
+    """
+    fig.update_layout(height= plot_height,
                         margin=dict(l=5, r=5, t=50, b=50),
-                        template =  "plotly_dark",
+                        template =  theme,
                         title_text= plot_title,
                         font=dict(family="Roboto, monospace",
                                 size=12,
@@ -58,15 +67,23 @@ def plot_layout_style(fig, plot_title):
     return fig
 
 
-def stroke_visualizer(dataset, samples_to_display= 64, scaled= False, centered = False):
-    """A function to show the samples on motions in a 3d plot
+def stroke_visualizer(dataset, 
+                      samples_to_display= 64, 
+                      scaled= False, 
+                      centered = False,
+                      plot_height= 600,
+                      theme= "plotly_dark"):
+    """ A function to show the samples on motions in a 3d plot
     Args:
         dataset (torch dataset): dataset of motions, each motion should be of size 
-        samples_to_display (int, optional): [description]. Defaults to 64.
+        samples_to_display (int, optional): number of samples to show in one plot. Defaults to 64.
+        scaled (bool, optional): if the samples should be scaled to 1. Defaults to False.
+        centered (bool, optional): if the samples should be centered aroun 0,0,0. Defaults to False.
+        plot_height (int): height of the plot, default set to 800px
+        theme (string): defines the plot thems, default set to "plotly_dark"
     """
-    
     test_scatters = []
-    
+    plot_title = ""
     random_indices = np.random.choice(len(dataset), samples_to_display, replace=False)
     
     for i, d in enumerate(dataset):
@@ -103,10 +120,10 @@ def stroke_visualizer(dataset, samples_to_display= 64, scaled= False, centered =
             
     fig = go.Figure(data=test_scatters)
 
-    fig.update_layout(height=600,
+    fig.update_layout(height=plot_height,
                         margin=dict(l=5, r=5, t=50, b=5),
-                        template =  "plotly_dark",
-                        title_text=plot_title,
+                        template =  theme,
+                        title_text= plot_title,
                         font=dict(family="Roboto, monospace",
                                 size=12,
                                 color="white"
@@ -156,14 +173,11 @@ def show_generated_motions(x_generated, plot_title):
     fig = plot_layout_style(fig, plot_title)
     return fig   
 
-def test_scaling_method(model_config):
-    sample_data= None
-    sample_size = np.random.randint(0, 128, size=1)
-
-    for d in model_config.train_iterator:
+def test_scaling_method(project_config):
+    for d in project_config.train_iterator:
         original_centered_data = d["X_centered"]
         
-        sample_centered_scaled = d[model_config.data_item]
+        sample_centered_scaled = d[project_config.data_item]
         centered_max_val = d["centered_max_val"][0]
         centered_min_val = d["centered_min_val"][0]
         
@@ -282,14 +296,14 @@ def generation_range_visualization(motion_data):
     fig.show()
     return fig
 
-def test_generation_method(model, model_config):
+def test_generation_method(model, project_config):
     for j in range(1):
         sample_size = np.random.randint(0, 128, size=1)
         d_seed= np.random.randint(0, 10)
-        for i, d in enumerate(model_config.train_iterator):
+        for i, d in enumerate(project_config.train_iterator):
             if i ==d_seed:
                 # picking a random sample
-                x_samples = d[model_config.data_item][sample_size, :,:]
+                x_samples = d[project_config.data_item][sample_size, :,:]
                 y_sampels = d['Y'][sample_size, :,:] 
                 print(torch.sum(y_sampels))
                 # getting the latent vector z
@@ -297,7 +311,7 @@ def test_generation_method(model, model_config):
 
                 # adding noise to latent vector
                 generation_size = 8
-                noise = torch.normal(mean= .1, std= .2, size = (generation_size, 256)).to(model_config.device)
+                noise = torch.normal(mean= .1, std= .2, size = (generation_size, 256)).to(project_config.device)
                 z = z + noise
                 # generating new motions based on the new z signals
                 x_generated = model.decoder(z[:generation_size//2] , y_sampels[:generation_size//2])

@@ -1,3 +1,13 @@
+#! /usr/bin/env python
+"""
+    File name: main_utils.py
+    Author: Ardavan Bidgoli
+    Date created: 11/03/2021
+    Date last modified: 01/03/2022
+    Python Version: 3.10.8
+    License: MIT
+"""
+
 import numpy as np
 import plotly.graph_objects as go
 import torch
@@ -5,7 +15,6 @@ import torch
 def eval_epoch(
                 model, 
                 config, 
-                data_iterator, 
                 plot= False, 
                 scaled_plot= False, 
                 update_tensorboard= False, 
@@ -14,43 +23,60 @@ def eval_epoch(
                 show_one_sample= False,
                 save_plot= False,
                 path_to_save_plot = None,
-                is_vae= False,
                 rec_loss= "L1", 
                 reduction="sum", 
                 kld_weight= 1e-1):
-    
-    
+    """Evaluation function
+
+    Args:
+        model (VAE_CNN): the cvae model
+        config (Configuration): represents the project configuration
+        plot (bool, optional): Switch to turn plotting the results on of off. Defaults to False.
+        scaled_plot (bool, optional): Defines if the plots should be scaled. Defaults to False.
+        update_tensorboard (bool, optional):switch to update tensorboard. Defaults to False.
+        epoch (int, optional): The epoch number of training. Defaults to None.
+        loss_function (vae_loss_function, optional): VAE loss function. Defaults to None.
+        show_one_sample (bool, optional): Switch to show one sample. Defaults to False.
+        save_plot (bool, optional): Switch to save the plots. Defaults to False.
+        path_to_save_plot (string, optional): path for saving eval plots. Defaults to None.
+        rec_loss (str, optional): Reconstruction loss. Defaults to "L1".
+        reduction (str, optional): loss reductino method. Defaults to "sum".
+        kld_weight (float, optional): kld_loss to rec_loss ratio. Defaults to 1e-1.
+
+    Returns:
+        touple: batch_eval_loss/counter, batch_eval_rec_losses/counter, batch_eval_kld_losses/counter
+    """
+    # putting the model in eval mode
     model.eval()
+    
     batch_eval_loss = 0
     batch_eval_rec_losses= 0 
     batch_eval_kld_losses= 0
     
-    item_to_show = np.random.randint(len(config.valid_iterator))
-    
+    # iterating over the validation data iterator
     for i, data in enumerate(config.valid_iterator):
+        # fetching x and y
         x= data[config.data_item]
         y= data["Y"]
         
-        x_rec = model(x, y)
-        if is_vae:
-            x_rec, mean, log_var = model(x,y)
-            eval_loss, eval_rec_losses, eval_kld_losses = loss_function(
-                                                                        x, 
-                                                                        x_rec, 
-                                                                        log_var,
-                                                                        mean, 
-                                                                        rec_loss= "L1", 
-                                                                        reduction='sum', 
-                                                                        kld_weight= kld_weight,
-                                                                        )
-            batch_eval_loss += eval_loss.item()
-            batch_eval_rec_losses += eval_rec_losses.item()
-            batch_eval_kld_losses += eval_kld_losses.item()
+        # passing the data through the model
+        x_rec, mean, log_var = model(x,y)
+        # calculating the loss
+        eval_loss, eval_rec_losses, eval_kld_losses = loss_function(
+                                                                    x, 
+                                                                    x_rec, 
+                                                                    log_var,
+                                                                    mean, 
+                                                                    rec_loss= rec_loss, 
+                                                                    reduction= reduction, 
+                                                                    kld_weight= kld_weight,
+                                                                    )
+        # updating the losses
+        batch_eval_loss += eval_loss.item()
+        batch_eval_rec_losses += eval_rec_losses.item()
+        batch_eval_kld_losses += eval_kld_losses.item()
         
-        else:
-            eval_loss = loss_function(x, x_rec)
-            batch_eval_loss += eval_loss.item()
-        
+        # get the pot updated only for the first item in each batch
         if i == 0:
             if plot or update_tensorboard or save_plot:
                 if scaled_plot:
@@ -85,12 +111,10 @@ def eval_epoch(
                     
     counter = len(config.valid_iterator)   
     
-    if is_vae:
-        return (batch_eval_loss/counter,
-                batch_eval_rec_losses/counter, 
-                batch_eval_kld_losses/counter)
-    else:     
-        return batch_eval_loss/counter               
+    
+    return (batch_eval_loss/counter,
+            batch_eval_rec_losses/counter, 
+            batch_eval_kld_losses/counter)
 
 
 def stroke_visualizer_mix(x, x_rec):
