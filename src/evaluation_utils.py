@@ -121,8 +121,8 @@ def stroke_visualizer_mix(x, x_rec):
     """A function to show the samples on motions in a 3d plot
 
     Args:
-        dataset (torch dataset): dataset of motions, each motion should be of size 
-        samples_to_display (int, optional): [description]. Defaults to 64.
+        x (Tensor): dataset of motions, each motion should be of size 
+        x_rec (Tensor): reconstruction of the motions. 
     """
     
     test_scatters = []

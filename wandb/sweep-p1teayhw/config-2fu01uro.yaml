@@ -1,0 +1,26 @@
+wandb_version: 1
+
+batch_size:
+  value: 128
+depth:
+  value: 4
+dropout:
+  value: 0.5
+epochs:
+  value: 300
+first_filter_size:
+  value: 9
+kernel_size:
+  value: 3
+kld_weight:
+  value: 1
+latent_dim:
+  value: 8
+learning_rate:
+  value: 0.001
+optimizer:
+  value: adam
+rec_loss:
+  value: L1
+reduction:
+  value: sum

@@ -69,19 +69,24 @@ def train_epoch_single(model, project_config, optimizer):
     
     return results
 
-def train_model(model, project_config, epochs=100, model_name_to_save="cvae_model", report_interval =50):  
+def train_model(model, project_config, model_config= None, model_name_to_save="cvae_model", report_interval =50):  
     """Trains the cvae model for given number of epochs
 
     Args:
         model (VAE_CNN): the cvae model to train
         project_config (Configuration): represents the project configuration
-        epochs (int, optional): number of training epochs. Defaults to 100.
+        model_config (int, optional): number of training epochs. Defaults to 100.
         model_name_to_save (str, optional): name for the trained model to save. 
                                             Defaults to "cvae_model".
 
     Returns:
         touple: four lsits of data, train_losses ,train_rec_losses,train_kld_losses, eval_losses 
     """
+    if model_config:
+        epochs = model_config.epochs
+    else:
+        epochs = 100
+        
     # setting up the trainnig process
     start_time = time.time()
     optimizer = optim.Adam(model.parameters(), lr = 0.0001)

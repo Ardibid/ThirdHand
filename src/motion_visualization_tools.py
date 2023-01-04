@@ -3,7 +3,7 @@
     File name: motion_visualization_tools.py
     Author: Ardavan Bidgoli
     Date created: 01/03/2022
-    Date last modified: 01/03/2022
+    Date last modified: 01/04/2022
     Python Version: 3.10.8
     License: MIT
 """
@@ -170,8 +170,78 @@ def show_generated_motions(x_generated, plot_title):
 
     fig = go.Figure(data=all_plots)
     fig = plot_layout_style(fig, plot_title)
-    return fig   
+    return fig  
 
+def show_generated_motions_advanced(motion_data, index = 0):
+    all_plots = []
+    colors= ['white', 'red', 'blue']
+    names = ["Original", "Rec", "Gen"]
+    for i, stroke_date in enumerate(motion_data):
+        sample = stroke_date[index,:,:] 
+        x_rec_plot = go.Scatter3d(x= sample[:,0].detach().cpu().numpy(), 
+                                    y= sample[: ,1].detach().cpu().numpy(), 
+                                    z= sample[:, 2].detach().cpu().numpy(),  
+                                    mode='lines',
+                                    name=names[i],
+                                    line=dict(width=3, color= colors[i]),
+                                    )
+        all_plots.append(x_rec_plot)
+
+
+    fig = go.Figure(data=all_plots)
+    plot_title = "Generated Motion"
+    
+    fig.update_layout(height=800,
+                        margin=dict(l=5, r=5, t=50, b=50),
+                        template =  "plotly_dark",
+                        title_text= plot_title,
+                        font=dict(family="Roboto, monospace",
+                                size=12,
+                                color="white"
+                                ),
+                        scene=dict(
+                                    aspectratio = dict( x=1, y=1, z=1 ),
+                                    camera=dict(up=dict(x=0, y=0, z=1),eye=dict(x=-1.5, y=1.5, z=1.5)),
+                                ),
+                        showlegend= True,
+                        coloraxis_showscale=False,)
+
+    fig.update_xaxes(showticklabels=False, 
+                        showgrid=False, 
+                        zeroline=False,
+                        zerolinewidth=1, 
+                        zerolinecolor='gray',
+                        fixedrange= True,)
+
+    fig.update_yaxes(showticklabels=False, 
+                        showgrid=False, 
+                        zeroline=False,
+                        zerolinewidth=1, 
+                        zerolinecolor='gray',
+                        fixedrange= True,
+                        scaleanchor = "x",
+                        scaleratio = 1,)
+
+    fig.show()
+     
+def compare_orig_rec_gen(model, project_config):
+    sample_data= None
+    sample_size = np.random.randint(0, project_config.batch_size)
+
+    for d in project_config.train_iterator:
+        x_samples = d[project_config.data_item][sample_size:sample_size+1, :,:]
+        y_sampels = d['Y'][sample_size:sample_size+1, :,:] 
+
+        z, __, __ = model.encoder(x_samples, y_sampels)
+
+        noise = torch.normal(mean=.1, std=.1, size = z.shape).to(project_config.device)
+        z = z + noise
+
+        x_generated = model.decoder(z , y_sampels)
+        x_rec,__, __ = model(x_samples, y_sampels)
+        show_generated_motions_advanced([x_samples, x_rec,x_generated])
+        break
+    
 def test_scaling_method(project_config):
     for d in project_config.train_iterator:
         original_centered_data = d["X_centered"]

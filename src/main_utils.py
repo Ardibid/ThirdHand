@@ -17,7 +17,7 @@ from datetime import datetime
 
 from src.thirdHand_data_loader import MotionSignalProcess, MezrabMotionDataset
 from src.thirdHand_data_loader import read_motion_csv_files, dataloader_creator
-
+from src.cvae_networks import CVAE_CNN
 ##########################################################################################
 # Classes
 ##########################################################################################
@@ -68,7 +68,7 @@ class Configuration(object):
         # training setting
         self.batch_size = batch_size
         self.data_item = data_item
-        self.epochs = 500
+        # self.epochs = 500
         self.writer = None
         
         if csv_folder_path is None:
@@ -106,8 +106,7 @@ class Configuration(object):
         strokes_riz = strokes_processor_riz.strokes
 
         # stack the two set
-        self.strokes = np.vstack([strokes, 
-                                  strokes_riz])
+        self.strokes = np.vstack([strokes, strokes_riz])
         
     def process_dataset_dataloaders(self):
         """Creates a PyTorch dataoader out of the strokes
@@ -167,3 +166,55 @@ class ModelConfiguration(object):
         self.kld_weight = kld_weight
         self.model_name_to_save = model_name_to_save
     
+def create_the_model(device='cuda', 
+                     csv_folder_path=None, 
+                     tresh_l= 0.289, 
+                     tresh_h_normal= 0.4, 
+                     tresh_h_riz= 0.27, 
+                     dist= 15, 
+                     peak_dist= 30, 
+                     motion_fixed_length= 20, 
+                     data_item="X_centered_scaled",
+                     batch_size=128, 
+                     kernel_size=5, # 3 or 5 both work!
+                     first_filter_size =9, # between 10 and 5
+                     depth = 2, # depth should be 2, 3, 4
+                     dropout = 0.1,
+                     epochs = 100, 
+                     latent_dim = 8,
+                     rec_loss= "L1",
+                     reduction= "sum",
+                     kld_weight = 1e-1,
+                     model_name_to_save="c_vae_model"):
+    """creates the configuration objects and inits the model
+    For arguemtns documentations, refer to the src/main_utils.py
+    Returns:
+        touple: model, project_config, model_config
+    """
+    
+    project_config = Configuration(device, 
+                                   csv_folder_path,
+                                   tresh_l, 
+                                   tresh_h_normal, 
+                                   tresh_h_riz, 
+                                   dist, 
+                                   peak_dist, 
+                                   motion_fixed_length, 
+                                   data_item, 
+                                   batch_size)
+
+    model_config = ModelConfiguration(
+                                    project_config.device, 
+                                    kernel_size, 
+                                    first_filter_size, 
+                                    depth,
+                                    dropout,
+                                    epochs, 
+                                    latent_dim,
+                                    rec_loss,
+                                    reduction,
+                                    kld_weight,
+                                    model_name_to_save)
+    
+    model = CVAE_CNN(project_config, model_config)
+    return model, project_config, model_config
