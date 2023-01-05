@@ -1,6 +1,6 @@
 # ThirdHand
 ![demo](./media/visualizations/thirdHand_hero_image.jpg)
----
+
 
 ThirdHand is a case study as part of my  PhD research on *A Situated Collaborative Framework for
 Machine Learning-Based Toolmaking for Creative Practitioners*.  
@@ -10,36 +10,36 @@ In this casestudy, I collaborated with a mucsician to create a robtic musical in
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/mLxlOaPRUNs/0.jpg)](https://www.youtube.com/watch?v=mLxlOaPRUNs)
 
 
-![demo](media\visualizations\Picture1.png)
+![demo](./media/visualizations/Picture1.png)
 
 
 ## Data Pipeline
-![demo](media\visualizations\63_a.png)
-![demo](media\visualizations\59.jpg)
+![demo](./media/visualizations/63_a.png)
+![demo](./media/visualizations/59.jpg)
 
 ## Data Post Processing
-![demo](media\visualizations\72.png)
-![demo](media\visualizations\73.png)
+![demo](./media/visualizations/72.png)
+![demo](./media/visualizations/73.png)
 
 ## ML Models
-![demo](media\visualizations\75.png)
-![demo](media\visualizations\74.png)
+![demo](./media/visualizations/75.png)
+![demo](./media/visualizations/74.png)
 
 ## Model's Performance
 ### Reconstruction
-![demo](media\visualizations\78.png)
+![demo](./media/visualizations/78.png)
 ### Generation
-![demo](media\visualizations\79_c.png)
+![demo](./media/visualizations/79_c.png)
 
 ## Robotic Setup
-![demo](media\visualizations\80.png)
-![demo](media\visualizations\83.png)
-![demo](media\visualizations\81_a.jpg)
-![demo](media\visualizations\81_b.jpg)
+![demo](./media/visualizations/80.png)
+![demo](./media/visualizations/83.png)
+![demo](./media/visualizations/81_a.jpg)
+![demo](./media/visualizations/81_b.jpg)
 
 ## Demo
-![demo](media\visualizations\motion_type.gif)
-![demo](media\visualizations\87.jpg)
+![demo](./media/visualizations/motion_type.gif)
+![demo](./media/visualizations/87.jpg)
 
 
 ## Requirements:
