@@ -42,7 +42,8 @@ In this casestudy, I collaborated with a mucsician to create a robtic musical in
 ## Demo
 
 
-https://user-images.githubusercontent.com/21223496/210702947-ebb6c95d-2127-40fd-a5cb-8fd50599cbd5.mp4
+
+https://user-images.githubusercontent.com/21223496/210703278-64774d38-a31b-42c3-86c5-7f911d28fcba.mp4
 ![demo](./media/visualizations/87.jpg)
 
 
