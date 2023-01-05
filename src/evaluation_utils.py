@@ -5,7 +5,7 @@
     Date created: 11/03/2021
     Date last modified: 01/03/2022
     Python Version: 3.10.8
-    License: MIT
+    License: Attribution-NonCommercial-ShareAlike 4.0 International
 """
 
 import numpy as np
