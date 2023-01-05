@@ -8,15 +8,14 @@ Machine Learning-Based Toolmaking for Creative Practitioners*.
 
 
 ## Summary
-In this casestudy, I collaborated with a mucsician to create a robtic musical instrument based on the user-generated data. A generative model was trained on the collected data from the musician to control a robotic arm to play Santoor, a traditional Persian musical instrument. <br>
+I collaborated with a mucsician to create a robtic musical instrument based on the user-generated data. A generative model was trained on the collected data from the musician to control a robotic arm to play Santoor, a traditional Persian musical instrument. <br>
 <br>
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/mLxlOaPRUNs/0.jpg)](https://www.youtube.com/watch?v=mLxlOaPRUNs)
-
 
 ![demo](./media/visualizations/Picture1.png)
 
 
 ## Data Pipeline
+![demo](./media\visualizations/playing_santoor.gif)
 ![demo](./media/visualizations/59.jpg)
 
 ## Data Post Processing
