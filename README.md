@@ -15,8 +15,9 @@ I collaborated with a mucsician to create a robtic musical instrument based on t
 
 
 ## Data Pipeline
-![demo](./media\visualizations/playing_santoor.gif)
+![data collection animation](./media/visualizations/playing_santoor_low_res.gif)
 ![demo](./media/visualizations/59.jpg)
+![alt](./media/visualizations/59.jpg){: width="12%"}
 
 ## Data Post Processing
 ![demo](./media/visualizations/72.png)
