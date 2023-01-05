@@ -72,7 +72,7 @@ class Configuration(object):
         self.writer = None
         
         if csv_folder_path is None:
-            self.csv_folder_path = "./data_pipelines/motion_csv_files"
+            self.csv_folder_path = "./data/motion_csv_files"
         else:
             self.csv_folder_path = csv_folder_path
 
