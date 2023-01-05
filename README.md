@@ -1,5 +1,5 @@
 # ThirdHand
-![demo](media\visualizations\thirdHand_hero_image.jpg)
+![demo](./media/visualizations/thirdHand_hero_image.jpg)
 ---
 
 ThirdHand is a case study as part of my  PhD research on *A Situated Collaborative Framework for
