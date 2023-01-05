@@ -5,6 +5,13 @@
 ThirdHand is a case study as part of my  PhD research on *A Situated Collaborative Framework for
 Machine Learning-Based Toolmaking for Creative Practitioners*.  
 
+
+
+
+https://user-images.githubusercontent.com/21223496/210702849-2e0e5043-b4b2-4a71-ba16-0c8d79b84e10.mp4
+
+
+
 ## Summary
 In this casestudy, I collaborated with a mucsician to create a robtic musical instrument based on the user-generated data. A generative model was trained on the collected data from the musician to control a robotic arm to play Santoor, a traditional Persian musical instrument. <br>
 <br>
