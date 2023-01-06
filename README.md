@@ -23,9 +23,9 @@ I collaborated with a mucsician to create a robtic musical instrument based on t
 
 ## Data Post Processing
 <p align="center">
-    <img src="./media/motion_3d_screenshots/motion_raw_quick.gif" width="800x"/>
-    <img src="./media/visualizations/73.png" width="800x"/>
-    <img src="./media/visualizations/72.png" width="800x"/>
+    <img src="./media/visualizations/73_top.png" height="250x"/>
+    <img src="./media/motion_3d_screenshots/motion_raw_quick.gif" height="250x"/>
+    <img src="./media/visualizations/73_bot.png" height="250x"/>
 </p>
 
 ## ML Models
