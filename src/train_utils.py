@@ -107,8 +107,7 @@ def train_model(model, project_config, model_config= None, model_name_to_save="c
                                                                         optimizer,
                                                                         )
         log_plot= False
-        
-        
+                
         # interval report of model's reconstruction as a plot 
         if epoch % report_interval ==0:
             log_plot= True

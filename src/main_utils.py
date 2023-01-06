@@ -167,25 +167,25 @@ class ModelConfiguration(object):
         self.model_name_to_save = model_name_to_save
     
 def create_the_model(device='cuda', 
-                     csv_folder_path=None, 
-                     tresh_l= 0.289, 
-                     tresh_h_normal= 0.4, 
-                     tresh_h_riz= 0.27, 
-                     dist= 15, 
-                     peak_dist= 30, 
-                     motion_fixed_length= 20, 
-                     data_item="X_centered_scaled",
-                     batch_size=128, 
-                     kernel_size=5, # 3 or 5 both work!
-                     first_filter_size =9, # between 10 and 5
+                     csv_folder_path = None, 
+                     tresh_l = 0.289, 
+                     tresh_h_normal = 0.4, 
+                     tresh_h_riz = 0.27, 
+                     dist = 15, 
+                     peak_dist = 30, 
+                     motion_fixed_length = 20, 
+                     data_item = "X_centered_scaled",
+                     batch_size = 128, 
+                     kernel_size = 5, # 3 or 5 both work!
+                     first_filter_size = 9, # between 10 and 5
                      depth = 2, # depth should be 2, 3, 4
                      dropout = 0.1,
                      epochs = 100, 
                      latent_dim = 8,
-                     rec_loss= "L1",
-                     reduction= "sum",
+                     rec_loss = "L1",
+                     reduction = "sum",
                      kld_weight = 1e-1,
-                     model_name_to_save="c_vae_model"):
+                     model_name_to_save = "c_vae_model"):
     """creates the configuration objects and inits the model
     For arguemtns documentations, refer to the src/main_utils.py
     Returns:

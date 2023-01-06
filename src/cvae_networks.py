@@ -129,9 +129,7 @@ class Decoder(nn.Module):
         self.latent_dim = 2**latent_dim
         self.last_filter_size= last_filter_size
         self.last_feature_size= last_feature_size
-        
-        
-        
+                       
         self.filter_number = [2**(i) for i in range(first_filter_size+1)]        
         self.filter_number = self.filter_number[-self.depth:]
         self.filter_number.reverse()
@@ -244,19 +242,7 @@ class VAE_CNN_(nn.Module):
         self.reduction = reduction
         self.kld_weight = kld_weight
         self.rec_loss = rec_loss
-        
-    # def vae_loss_function(self, x, x_rec, log_var, mean):
-    #     print(" IAM USING THIS FUNCTION!")
-    #     if self.rec_loss == "L1":
-    #         train_rec_loss = F.l1_loss(x_rec, x, reduction=self.reduction)   
-    #     else:
-    #         train_rec_loss = F.mse_loss(x_rec, x, reduction=self.reduction)     
-    #     train_kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mean**2 - log_var.exp(), dim = 1), dim = 0)
 
-    #     train_loss = train_rec_loss  + train_kld_loss*self.kld_weight
-        
-    #     return train_loss, train_rec_loss, train_kld_loss*self.kld_weight  
-    
     def forward(self, x, y):
         z, mean, log_var = self.encoder(x, y)
         x_rec = self.decoder(z, y)

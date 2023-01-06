@@ -279,10 +279,6 @@ class MezrabMotionDataset(Dataset):
         
         self.scaled_and_centered()
         
-        # TODO: solve this issue later
-            # ideally it should be like this, but it makes serioud issue with dataloers
-            # so, I keep this line without having one label for the whole motion
-            # self.Hand = torch.from_numpy(self.Hand_np[0]).float().to(device)
         self.Hand = torch.from_numpy(self.Hand_np).float().to(device)
         if flipped_matrix :
             self.data = {"X" : self.X.view(),
