@@ -41,22 +41,22 @@ The data samples are 6-DoF motiones of mezrabs (hammers). Each mezrab was tagged
     <img src="./media/playing_santoor.gif" width="80%" style="border-radius:10px;"/>
 </p>
 
-The stream of motion capture data was later cleaned saved as csv fiels. The functions available in *thirdHand_data_loader.py* automatically sliced the data into shorter sequences and assing the left/right hand labels. The samples are scaled into [0, 1] and centered around the (0,0,0). <br>
-<p align="center">
-    <img src="./media/signal_processing.png"width="80%"/>
-</p>
-
-<p align="center">
-    <img src="./media/motion_raw_quick.gif" width="35%" style="border-radius:10px;"/>
-    <img src="./media/motions_sampler_of_250.png" width="41%"/>
-</p>
-
+The stream of motion capture data was later cleaned saved as csv fiels. The functions available in *thirdHand_data_loader.py* automatically sliced the data into shorter sequences and assing the left/right hand labels. The samples are scaled into [0, 1] and centered around the (0,0,0). 
 Each motion each sample was formatted as a $20 × 9$ vector, representing the 20 poses in space, each defined by a point and two vectors.
 $$X_t = [x_0, x_1, ..., x_{19}]$$
 $$x_i = [px_i, py_i, pz_i, v_xx_i, v_xy_i, v_xz_i, v_yx_i, v_yy_i, v_yz_i]$$
 
 <p align="center">
-   <img src="./media/motion_breakdown.png" width="80%"/>
+    <img src="./media/signal_processing.png"width="60%"/>
+    <img src="./media/motion_breakdown.png" width="60%"/>
+</p>
+
+
+<p align="center">
+    <img src="./media/motion_raw_quick.gif" width="60%" style="border-radius:10px;"/>
+</p>
+<p align="center">
+    <img src="./media/motions_sampler_of_250.png" width="41%"/>
 </p>
 
 ## ML Models
