@@ -37,13 +37,13 @@ I collaborated with a mucsician to create a robtic musical instrument based on t
 
 
 <p align="center">
-   <img src="./media/visualizations/72.png" width="600x"/>
+   <img src="./media/visualizations/72.png" width="600x" style="background-color:white;"/>
 </p>
 <p align="center">
-   <img src="./media/visualizations/74.png" width="600x"/>
+   <img src="./media/visualizations/74.png" width="600x" style="background-color:white;"/>
 </p>
 <p align="center">
-   <img src="./media/visualizations/75.png" width="800x"/>
+   <img src="./media/visualizations/75.png" width="800x" style="background-color:white;"/>
 </p>
 
 
@@ -59,8 +59,8 @@ I collaborated with a mucsician to create a robtic musical instrument based on t
 
 ## Robotic Setup
 <p align="center">
-   <img src="./media/visualizations/80.png" width="800x"/>
-   <img src="./media/visualizations/83.png" width="600x"/>
+   <img src="./media/visualizations/80.png" width="800x" style="background-color:white;"/>
+   <img src="./media/visualizations/83.png" width="600x" style="background-color:white;"/>
 </p>
 <div align="center">
     <p float="left">
