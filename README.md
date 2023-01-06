@@ -47,8 +47,8 @@ $$X_t = [x_0, x_1, ..., x_{19}]$$
 $$x_i = [px_i, py_i, pz_i, v_xx_i, v_xy_i, v_xz_i, v_yx_i, v_yy_i, v_yz_i]$$
 
 <p align="center">
-    <img src="./media/signal_processing.png"width="60%"/>
-    <img src="./media/motion_breakdown.png" width="60%"/>
+    <img src="./media/signal_processing.png"width="60%" style="border-radius:10px;"/>
+    <img src="./media/motion_breakdown.png" width="60%" style="border-radius:10px;"/>
 </p>
 
 
@@ -56,7 +56,7 @@ $$x_i = [px_i, py_i, pz_i, v_xx_i, v_xy_i, v_xz_i, v_yx_i, v_yy_i, v_yz_i]$$
     <img src="./media/motion_raw_quick.gif" width="60%" style="border-radius:10px;"/>
 </p>
 <p align="center">
-    <img src="./media/motions_sampler_of_250.png" width="41%"/>
+    <img src="./media/motions_sampler_of_250.png" width="60%"/>
 </p>
 
 ## ML Models
