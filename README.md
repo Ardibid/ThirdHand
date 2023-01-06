@@ -131,4 +131,6 @@ Use the [spec-file.txt](spec-file.txt) to reproduce the Conda environment. The m
 
 ---
 By Ardavan Bidgoli, 2021-2022, [GitHub](https://github.com/Ardibid)
-Developed as a part of Ardavan Bidgoli's PhD thesis @ Carnegie Mellon University, school of Architecture. In collaboration with Mahtab Nadalian.
+Developed as a part of Ardavan Bidgoli's PhD thesis @ Carnegie Mellon University, school of Architecture. In collaboration with Mahtab Nadalian. <br>
+This project was partially supported by CMU School of Architecture Micro Grant. <br>
+If you are interested in robotic musical instrument design for Persian music, you will enjoy [Santoor Bot by Mohammad Jafari](https://music.gatech.edu/santoor-bot), as much as I did! The primary difference between the two projects is the focus on the musician specific mezrab motions and using a deep learning model to generate new motions simialr to the one demonstrated by the musician. <br>
