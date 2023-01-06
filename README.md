@@ -10,9 +10,11 @@ ThirdHand is a case study as part of my  PhD research on "*A Situated Collaborat
 ## Summary
 I collaborated with a mucsician to create a robtic musical instrument based on the user-generated data. A generative model was trained on the collected data from the musician to control a robotic arm to play Santoor, a traditional Persian musical instrument. <br>
 <br>
+
 <p align="center">
     <img src="./media/visualizations/Picture1.png" width="800x"/>
 </p>
+
 
 ## Data Pipeline
 <p align="center">
@@ -30,13 +32,16 @@ I collaborated with a mucsician to create a robtic musical instrument based on t
 <p align="center">
     <img src="./media/motion_3d_screenshots/motion_raw_quick.gif" width="400x"/>
 </p>
+
 ## ML Models
-<div align="center">
-    <p float="left">
-            <img src="./media/visualizations/74.png" width="400" />
-            <img src="./media/visualizations/72.png" width="400" /> 
-    </p>
-</div>
+
+
+<p align="center">
+   <img src="./media/visualizations/72.png" width="600x"/>
+</p>
+<p align="center">
+   <img src="./media/visualizations/74.png" width="600x"/>
+</p>
 <p align="center">
    <img src="./media/visualizations/75.png" width="800x"/>
 </p>
