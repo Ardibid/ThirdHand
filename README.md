@@ -2,72 +2,87 @@
 <p align="center">
     <img src="./media/visualizations/thirdHand_hero_image.jpg"/>
 </p>
+Ardavan Bidgoli &copy;
 
-ThirdHand is a case study as part of my  PhD research on "*A Situated Collaborative Framework for Machine Learning-Based Toolmaking for Creative Practitioners*".  
-
+ThirdHand is a case study as part of my  PhD research on "*A Collaborative Framework for Machine Learning-Based Toolmaking for Creative Practitices*". This study proposes a framework for making robotic musical instruments to augment an artist’s capability to play santur. It is not destined to replace the artist, but it is an effort to explore the affordances of machine learning for musical toolmaking. <br>
+This project utilizes a dataset of six-degree-of-freedom motions provided by the musician as a vehicle to convey the specific idiom of the artist. The samples presented earlier in this chapter did not focus on this aspect.<br>
 
 
 ## Summary
-I collaborated with a mucsician to create a robtic musical instrument based on the user-generated data. A generative model was trained on the collected data from the musician to control a robotic arm to play Santoor, a traditional Persian musical instrument. <br>
+This study focuses on developing a robotic musical instrument to play santur based on the samples provided by the participating musician. Accordingly, composing, generating, or improvising music is out of the scope of this study. The data modality is restricted to mezrab strokes, encoded as sequences of six-degree-of-freedom motions. <br>
+
 <br>
+
+A Conditional Variational AutoEncoder was trained on the mezrab motions demonstrated by the musician. We want to see if it is possible to generate  novel mezrab stroke samples that closely resembles hers, but with slight variation, and then play them on a robotics arm. The model does not generate or compose new musical scores and the robotic musical instrument does not behaves interactively.  
 
 <p align="center">
     <img src="./media/visualizations/Picture1.png" width="800x"/>
 </p>
 
-
 ## Data Pipeline
+*Santur* is a traditional Persian stringed musical instrument with common roots with the hammered dulcimer. The instrument is usually played while putting stationary on an inclined platform. Its trapezoidal frame seats in front of the musician and provides a flat framework for its 72 strings.
+The data samples are 6-DoF motiones of mezrabs (hammers). Each mezrab was tagged with reflective tapes to allow the motion capture system register their motion @120Hz.  
 <p align="center">
-    <img src="./media/visualizations/playing_santoor.gif" width="800x"/>
     <img src="./media/visualizations/trackers.png" width="800x"/>
+    <img src="./media/visualizations/playing_santoor.gif" width="800x"/>
+</p>
+The stream of motion capture data was later cleaned saved as csv fiels. The functions available in *thirdHand_data_loader.py* automatically sliced the data into shorter sequences and assing the left/right hand labels. The samples are scaled into [0, 1] and centered around the (0,0,0).
+<br>
+<br>
+<p align="center">
+    <img src="./media/visualizations/image83.png"width="800x"/>
 </p>
 
-
-## Data Post Processing
 <p align="center">
-    <img src="./media/visualizations/73_top.png" width="400x"/>
     <img src="./media/visualizations/73_bot.png" width="400x"/>
 </p>
 
 <p align="center">
     <img src="./media/motion_3d_screenshots/motion_raw_quick.gif" width="400x"/>
 </p>
+Each motion each sample was formatted as a 20 × 9 vector, representing the 20 poses in space, each defined by a point and two vectors. 
 
-## ML Models
+$$\ X_t = [x_0, x_1, ..., x_19]$$
 
+$$
+\ x_i = [px_i, py_i, pz_i, v_xx_i, v_xy_i, v_xz_i, v_yx_i, v_yy_i, v_yz_i, ]$$
 
 <p align="center">
    <img src="./media/visualizations/72.png" width="600x"/>
 </p>
+## ML Models
+The model is based on the general Conditional Variational AutoEncoder architecture. The temporal features of the mezrab's motions werer captured using 1-D CNN layers. The conditioning signal is a one-hot vector of dim 1x2 that determines the hand label.
 <p align="center">
    <img src="./media/visualizations/74.png" width="600x"/>
 </p>
 <p align="center">
-   <img src="./media/visualizations/75.png" width="800x"/>
+   <img src="./media/visualizations/75.png" width="600x"/>
 </p>
-
 
 ## Model's Performance
-### Reconstruction
+The model can reconstruct the motions after around 150 epochs and it can be used to generate new motions by sampling from the latent space.
 <p align="center">
-   <img src="./media/visualizations/78.png" width="800x"/>
+   <img src="./media/visualizations/78.png" width="600x"/>
 </p>
-### Generation
 <p align="center">
    <img src="./media/visualizations/79_c.png" width="400x"/>
 </p>
 
 ## Robotic Setup
+The generated motions were post-processed to control a robotic arm, equipped with a mezrab. 
 <p align="center">
-   <img src="./media/visualizations/80.png" width="800x" style="background-color:white;"/>
-   <img src="./media/visualizations/83.png" width="600x" style="background-color:white;"/>
+   <img src="./media/visualizations/80.png" width="600x" style="background-color:white;"/>
 </p>
 <div align="center">
     <p float="left">
-            <img src="./media/visualizations/81_a.jpg" width="400" />
-            <img src="./media/visualizations/81_b.jpg" width="400" /> 
+            <img src="./media/visualizations/81_a.jpg" width="20.5%" />
+            <img src="./media/visualizations/81_b.jpg" width="20.5%" /> 
+            <img src="./media/visualizations/82_a.jpg" width="9.15%" /> 
     </p>
 </div>
+<p align="center">
+   <img src="./media/visualizations/83.png" width="600x" style="background-color:white;"/>
+</p>
 
 ## Demo
 https://user-images.githubusercontent.com/21223496/210703346-255a4f03-ba97-4ae0-a68b-d9ed55cedbb7.mp4
@@ -105,3 +120,7 @@ Use the [spec-file.txt](spec-file.txt) to reproduce the Conda environment. The m
     ```conda install -c conda-forge python-kaleido```
 * [NBFormat](https://pypi.org/project/nbformat/) <br>
     ```conda install -c conda-forge nbformat```
+
+---
+By Ardavan Bidgoli, 2021-2022, [GitHub](https://github.com/Ardibid)
+Developed as a part of Ardavan Bidgoli's PhD thesis @ Carnegie Mellon University, school of Architecture. In collaboration with Mahtab Nadalian.
