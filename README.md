@@ -65,38 +65,40 @@ The model can reconstruct the motions after around 150 epochs and it can be used
    <img src="./media/visualizations/78.png" width="80%"/>
 </p>
 <p align="center">
-   <img src="./media/visualizations/79_c.png" width="50%"/>
+   <img src="./media/visualizations/79_c.png" width="30%"/>
 </p>
 
 ## Robotic Setup
-The generated motions were post-processed to control a robotic arm, equipped with a mezrab. 
+The generated motions were post-processed using *Grasshopper* and *HAL* plugin to control a robotic arm, equipped with a mezrab. 
 <p align="center">
    <img src="./media/visualizations/80.png" width="80%"/>
 </p>
 <div align="center">
     <p float="left">
-            <img src="./media/visualizations/81_a.jpg" width="30.5%" />
-            <img src="./media/visualizations/81_b.jpg" width="30.5%" /> 
-            <img src="./media/visualizations/82_a.jpg" width="13.5%" /> 
+            <img src="./media/visualizations/81_a.jpg" width="32%" />
+            <img src="./media/visualizations/81_b.jpg" width="32%" /> 
+            <img src="./media/visualizations/82_a.jpg" width="14.5%" /> 
     </p>
 </div>
 <p align="center">
-   <img src="./media/visualizations/83.png" width="80%"/>
+   <img src="./media/visualizations/motion_type.gif" width="80%"/>
 </p>
 
 ## Demo
-https://user-images.githubusercontent.com/21223496/210703346-255a4f03-ba97-4ae0-a68b-d9ed55cedbb7.mp4
-
 <p align="center">
-   <img src="./media/visualizations/87.jpg" width="40%"/>
+   <img src="./media/visualizations/demo_01.gif" width="80%"/>
 </p>
 
+<p align="center">
+   <img src="./media/visualizations/87.jpg" width="20%"/>
+</p>
+
+# Code Details
 ## Requirements:
-### Base:
 * Python: 3.10.8
 * CUDA: 11.6
 
-### Dependencies:
+## Dependencies:
 Use the [spec-file.txt](spec-file.txt) to reproduce the Conda environment. The main libraries are listed below:
 * [PyTorch](https://pytorch.org/get-started/locally/) 1.13.1 <br>
     ``` conda install pytorch torchvision torchaudio pytorch-cuda=11.6 -c pytorch -c nvidia```
