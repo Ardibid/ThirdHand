@@ -16,29 +16,29 @@ This study focuses on developing a robotic musical instrument to play santur bas
 A Conditional Variational AutoEncoder was trained on the mezrab motions demonstrated by the musician. We want to see if it is possible to generate  novel mezrab stroke samples that closely resembles hers, but with slight variation, and then play them on a robotics arm. The model does not generate or compose new musical scores and the robotic musical instrument does not behaves interactively.  
 
 <p align="center">
-    <img src="./media/visualizations/Picture1.png" width="800x"/>
+    <img src="./media/visualizations/Picture1.png" width="80%"/>
 </p>
 
 ## Data Pipeline
 *Santur* is a traditional Persian stringed musical instrument with common roots with the hammered dulcimer. The instrument is usually played while putting stationary on an inclined platform. Its trapezoidal frame seats in front of the musician and provides a flat framework for its 72 strings.
 The data samples are 6-DoF motiones of mezrabs (hammers). Each mezrab was tagged with reflective tapes to allow the motion capture system register their motion @120Hz.  
 <p align="center">
-    <img src="./media/visualizations/trackers.png" width="800x"/>
-    <img src="./media/visualizations/playing_santoor.gif" width="800x"/>
+    <img src="./media/visualizations/trackers.png" width="80%"/>
+    <img src="./media/visualizations/playing_santoor.gif" width="80%"/>
 </p>
 The stream of motion capture data was later cleaned saved as csv fiels. The functions available in *thirdHand_data_loader.py* automatically sliced the data into shorter sequences and assing the left/right hand labels. The samples are scaled into [0, 1] and centered around the (0,0,0).
 <br>
 <br>
 <p align="center">
-    <img src="./media/visualizations/image83.png"width="800x"/>
+    <img src="./media/visualizations/image83.png"width="80%"/>
 </p>
 
 <p align="center">
-    <img src="./media/visualizations/73_bot.png" width="400x"/>
+    <img src="./media/visualizations/73_bot.png" width="50%"/>
 </p>
 
 <p align="center">
-    <img src="./media/motion_3d_screenshots/motion_raw_quick.gif" width="400x"/>
+    <img src="./media/motion_3d_screenshots/motion_raw_quick.gif" width="50%"/>
 </p>
 Each motion each sample was formatted as a 20 × 9 vector, representing the 20 poses in space, each defined by a point and two vectors. 
 
@@ -48,46 +48,47 @@ $$
 \ x_i = [px_i, py_i, pz_i, v_xx_i, v_xy_i, v_xz_i, v_yx_i, v_yy_i, v_yz_i, ]$$
 
 <p align="center">
-   <img src="./media/visualizations/72.png" width="600x"/>
+   <img src="./media/visualizations/72.png" width="80%"/>
 </p>
 ## ML Models
 The model is based on the general Conditional Variational AutoEncoder architecture. The temporal features of the mezrab's motions werer captured using 1-D CNN layers. The conditioning signal is a one-hot vector of dim 1x2 that determines the hand label.
 <p align="center">
-   <img src="./media/visualizations/74.png" width="600x"/>
+   <img src="./media/visualizations/74.png" width="80%"/>
 </p>
 <p align="center">
-   <img src="./media/visualizations/75.png" width="600x"/>
+   <img src="./media/visualizations/75.png" width="80%"/>
 </p>
 
 ## Model's Performance
 The model can reconstruct the motions after around 150 epochs and it can be used to generate new motions by sampling from the latent space.
 <p align="center">
-   <img src="./media/visualizations/78.png" width="600x"/>
+   <img src="./media/visualizations/78.png" width="80%"/>
 </p>
 <p align="center">
-   <img src="./media/visualizations/79_c.png" width="400x"/>
+   <img src="./media/visualizations/79_c.png" width="50%"/>
 </p>
 
 ## Robotic Setup
 The generated motions were post-processed to control a robotic arm, equipped with a mezrab. 
 <p align="center">
-   <img src="./media/visualizations/80.png" width="600x" style="background-color:white;"/>
+   <img src="./media/visualizations/80.png" width="80%"/>
 </p>
 <div align="center">
     <p float="left">
-            <img src="./media/visualizations/81_a.jpg" width="20.5%" />
-            <img src="./media/visualizations/81_b.jpg" width="20.5%" /> 
-            <img src="./media/visualizations/82_a.jpg" width="9.15%" /> 
+            <img src="./media/visualizations/81_a.jpg" width="30.5%" />
+            <img src="./media/visualizations/81_b.jpg" width="30.5%" /> 
+            <img src="./media/visualizations/82_a.jpg" width="13.5%" /> 
     </p>
 </div>
 <p align="center">
-   <img src="./media/visualizations/83.png" width="600x" style="background-color:white;"/>
+   <img src="./media/visualizations/83.png" width="80%"/>
 </p>
 
 ## Demo
 https://user-images.githubusercontent.com/21223496/210703346-255a4f03-ba97-4ae0-a68b-d9ed55cedbb7.mp4
+
 <p align="center">
-   <img src="./media/visualizations/87.jpg" width="400x"/>
+   <img src="./media/visualizations/87.jpg" width="40%"/>
 </p>
 
 ## Requirements:
