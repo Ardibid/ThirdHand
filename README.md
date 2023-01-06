@@ -23,11 +23,13 @@ I collaborated with a mucsician to create a robtic musical instrument based on t
 
 ## Data Post Processing
 <p align="center">
-    <img src="./media/visualizations/73_top.png" height="250x"/>
-    <img src="./media/motion_3d_screenshots/motion_raw_quick.gif" height="250x"/>
-    <img src="./media/visualizations/73_bot.png" height="250x"/>
+    <img src="./media/visualizations/73_top.png" width="400x"/>
+    <img src="./media/visualizations/73_bot.png" width="400x"/>
 </p>
 
+<p align="center">
+    <img src="./media/motion_3d_screenshots/motion_raw_quick.gif" width="400x"/>
+</p>
 ## ML Models
 <div align="center">
     <p float="left">
