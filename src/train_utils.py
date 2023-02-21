@@ -10,12 +10,15 @@
 
 import torch
 from torch import optim as optim
-
+from torch.utils.tensorboard import SummaryWriter
 import time
 
 from .cvae_networks import vae_loss_function
 from .evaluation_utils import eval_epoch
 from .motion_visualization_tools import quick_plot
+
+# Tensorboard summary writer
+writer = SummaryWriter()
 
 ##########################################################################################
 # Training Functions
@@ -112,7 +115,7 @@ def train_model(model, project_config, model_config= None, model_name_to_save="c
         if epoch % report_interval ==0:
             log_plot= True
             path_to_save_plot = "runs/progress/tmp_fig_{}.png".format(epoch)  
-            print("Image {} saved".format(epoch)) 
+            # print("Image {} saved".format(epoch)) 
         
         # calculating evaluation loss     
         eval_loss,_,_ = eval_epoch(
@@ -132,6 +135,10 @@ def train_model(model, project_config, model_config= None, model_name_to_save="c
         train_kld_losses.append(train_kld_loss)
         eval_losses.append(eval_loss)
         
+        writer.add_scalar("Loss/train_loss", train_loss, epoch)
+        writer.add_scalar("Loss_details/train_rec_loss", train_rec_loss, epoch)
+        writer.add_scalar("Loss_details/train_kld_loss", train_kld_loss, epoch)
+        writer.add_scalar("Loss/eval_loss", eval_loss, epoch)
         
         if epoch % report_interval ==0:
             print("{}:\tTotal: {:.5f}\tEval loss: {:.5f}\t Rec loss: {:.5f}\t KLD loss: {:.5f}\t time: {:.1f}s".format(epoch, 
